@@ -15,6 +15,7 @@ class Home extends BaseController
 
     public function index()
     {
+        // Mengambil Data dari DB untuk data pencarian
         $db = db_connect();
         $query_angkatan = $db->query("SELECT angkatan, COUNT(*) AS jumlah FROM profil WHERE deleted_at IS NULL GROUP BY angkatan;")->getResultArray();
         $data['angkatan'] = $query_angkatan;
@@ -35,19 +36,20 @@ class Home extends BaseController
     }
     public function auth()
     {
+        // Authentikasi Data Akun dari Form dan Database
         $auth = new LoginModel();
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
         $query = $auth->where(['username' => $username])->first();
-        // print_r($query);
-        // die;
         if ($query != null) {
+            // verifikasi password
             if (password_verify($password, $query['password'])) {
                 $newdata = [
                     'id_user' => $query['id_user'], 
                     'username' => $query['username'],
                     'level' => $query['level'],
                 ];
+                // Jika Berhasil, simpan data ke session
                 $this->session->set($newdata);                
                 if ($query['level'] == 1 || $query['level'] == '1') {
                     return redirect('admin');
@@ -69,12 +71,14 @@ class Home extends BaseController
 
     public function logout()
     {
+        // Menghapus session
         session_destroy();
         return redirect('/');
     }
 
     public function search()
     {
+        // Mencari data alumni secara detail
         $keyword = $this->request->getVar('keyword');
         $akun = new LoginModel();
         $data['keyword'] = $keyword;

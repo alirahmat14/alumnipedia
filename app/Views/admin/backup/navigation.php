@@ -13,6 +13,49 @@
 
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown">
+
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-chat-left-text"></i>
+          <span class="badge bg-success badge-number"><?= ($count_unread_message > 0) ? $count_unread_message : ''; ?></span>
+        </a><!-- End Messages Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <li class="dropdown-header">
+            <?php if($count_unread_message > 0): ?>
+              Anda memiliki <?= $count_unread_message; ?> pesan baru
+              <a href="/admin/pesan"><span class="badge badge-sm rounded-pill bg-primary p-2 ms-2">Lihat semua</span></a>
+            <?php else: ?>
+              Anda tidak memiliki pesan baru
+            <?php endif ?>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <?php foreach($unread_message as $unread):  ?>
+          <li class="message-item ps-4 py-3">
+            <a href="/admin/pesan-admin/detail/<?= $unread['id_pesan_admin']; ?>">              
+              <div class="">
+                <h4><?= $unread['nama']; ?></h4>
+                <p><?= (str_word_count($unread['isi']) > 20 ? substr($unread['isi'],0,20)."..." : $unread['isi']); ?></p>
+                <p><?= ($unread['dikirim'] == '0000-00-00 00:00:00') ? 'Tidak tersedia' : date('H:i, d F Y', strtotime($unread['dikirim'])); ?></p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <?php endforeach ?>
+
+          <li class="dropdown-footer">
+            <a href="/admin/pesan">Lihat semua pesan</a>
+          </li>
+
+        </ul><!-- End Messages Dropdown Items -->
+
+      </li><!-- End Messages Nav -->
+
       <li class="nav-item dropdown pe-3">
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -73,9 +116,16 @@
     <li class="nav-item">
       <a class="nav-link <?= $page=='jenjang'?'':'collapsed' ?>" href="<?= base_url('admin/jenjang-alumni'); ?>">
         <i class="bi bi-mortarboard"></i>
-        <span>Tracer Study Alumni</span>
+        <span>Jenjang Karir Alumni</span>
       </a>
     </li><!-- End jenjang karir alumni Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link <?= $page=='pesan'?'':'collapsed' ?>" href="<?= base_url('admin/pesan'); ?>">
+        <i class="bi bi-envelope"></i>
+        <span>Pesan</span>
+      </a>
+    </li><!-- End Contact Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link <?= $page=='infoz'?'':'collapsed' ?>" href="<?= base_url('admin/info'); ?>">

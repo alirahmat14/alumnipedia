@@ -49,8 +49,7 @@ class User extends BaseController
 
     // Bagian Beranda User
     public function index()
-    {       
-        // Halaman pertama bagian user
+    {        
         if (session()->level != 2 || session()->level != '2') {
             return redirect('/');
         }        
@@ -169,14 +168,12 @@ class User extends BaseController
             return redirect('/');
         }
         if ($this->request->is('post') == true) {            
-            // if (!$this->validate($this->rules_jenjang)) {           
-            //     session()->setFlashdata('danger', $this->validation->getError());
-            //     // session()->setFlashdata('institusi', $this->validation->getError());
-            //     return redirect()->back()->withInput();
-            // }
-            // $insert = $this->jenjang->saveData($this->request->getPost(), session()->id_user);
-            // dd($this->request->getPost());
-            $insert = $this->jenjang->insertTracerStudy($this->request->getPost(), session()->id_user);
+            if (!$this->validate($this->rules_jenjang)) {           
+                session()->setFlashdata('danger', $this->validation->getError());
+                // session()->setFlashdata('institusi', $this->validation->getError());
+                return redirect()->back()->withInput();
+            }
+            $insert = $this->jenjang->saveData($this->request->getPost(), session()->id_user);
             if ($insert == true) {
                 session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data jenjang karir <strong>berhasil</strong> ditambahkan!');
             } else {
@@ -199,13 +196,12 @@ class User extends BaseController
             return redirect()->back();
         }        
         if ($this->request->is('post') == true) {
-            // if (!$this->validate($this->rules_jenjang)) {           
-            //     session()->setFlashdata('danger', $this->validation->getError());
-            //     // session()->setFlashdata('institusi', $this->validation->getError());
-            //     return redirect()->back()->withInput();
-            // }
+            if (!$this->validate($this->rules_jenjang)) {           
+                session()->setFlashdata('danger', $this->validation->getError());
+                // session()->setFlashdata('institusi', $this->validation->getError());
+                return redirect()->back()->withInput();
+            }
             $update = $this->jenjang->saveData($this->request->getPost(), session()->id_user, $id_jenjang);
-            // $update = $this->jenjang->updateTracerStudy($this->request->getPost(), session()->id_user, $id_jenjang);
             if ($update == true) {
                 session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data jenjang karir <strong>berhasil</strong> diubah!');
             } else {
