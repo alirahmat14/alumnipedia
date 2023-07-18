@@ -116,7 +116,9 @@ class User extends BaseController
         $foto_baru = $this->request->getFile('foto');
         $nama_baru = $foto_baru->getRandomName();
         if ($this->data_profil['foto'] != 'default.jpg') {
-            unlink($folder.$this->data_profil['foto']);
+            if(file_exists($folder . $this->data_profil['foto'])){
+                unlink($folder . $this->data_profil['foto']);
+            }
         }
         $foto_baru->move($folder, $nama_baru);
         $update = $this->profil->updateFotoUser($nama_baru, session()->id_user);
