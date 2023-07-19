@@ -150,7 +150,7 @@ class User extends BaseController
         return redirect()->to('user/profile');
     }
 
-    // Bagian Jenjang Karir
+    // Bagian Tracer study
     public function jenjang()
     {
         if (session()->level != 2 || session()->level != '2') {
@@ -180,9 +180,9 @@ class User extends BaseController
             // dd($this->request->getPost());
             $insert = $this->jenjang->insertTracerStudy($this->request->getPost(), session()->id_user);
             if ($insert == true) {
-                session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data jenjang karir <strong>berhasil</strong> ditambahkan!');
+                session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data tracer study <strong>berhasil</strong> ditambahkan!');
             } else {
-                session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data jenjang karir <strong>gagal</strong> ditambahkan!');
+                session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data tracer study <strong>gagal</strong> ditambahkan!');
             }
             return redirect()->to('user/jenjang');
         } else {
@@ -209,9 +209,9 @@ class User extends BaseController
             $update = $this->jenjang->saveData($this->request->getPost(), session()->id_user, $id_jenjang);
             // $update = $this->jenjang->updateTracerStudy($this->request->getPost(), session()->id_user, $id_jenjang);
             if ($update == true) {
-                session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data jenjang karir <strong>berhasil</strong> diubah!');
+                session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data tracer study <strong>berhasil</strong> diubah!');
             } else {
-                session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data jenjang karir <strong>gagal</strong> diubah!');
+                session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data tracer study <strong>gagal</strong> diubah!');
             }
             return redirect()->to('user/jenjang');
         } else {
@@ -239,9 +239,9 @@ class User extends BaseController
         }
         $delete = $this->jenjang->where('id_jenjang', $id_jenjang)->delete();
         if ($delete == true) {
-            session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data jenjang karir <strong>berhasil</strong> dihapus!');
+            session()->setFlashdata('success', '<i class="bi bi-check-circle-fill"></i> Data tracer study <strong>berhasil</strong> dihapus!');
         } else {
-            session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data jenjang karir <strong>gagal</strong> dihapus!');
+            session()->setFlashdata('danger', '<i class="bi bi-x-circle-fill"></i> Data tracer study <strong>gagal</strong> dihapus!');
         }
         return redirect()->to('user/jenjang');
     }
